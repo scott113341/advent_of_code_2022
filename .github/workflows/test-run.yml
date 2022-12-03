@@ -9,9 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Lint
-        run: |
-          cargo fmt --check
-          cargo clippy --no-deps
+        run: ./scripts/lint
 
   test:
     runs-on: ubuntu-latest
