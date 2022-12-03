@@ -1,0 +1,32 @@
+name: Lint + Test + Run
+
+on:
+  - push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lint
+        run: |
+          cargo fmt --check
+          cargo clippy --no-deps
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --release --tests
+      - name: Test
+        run: cargo test --release
+
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --release
+      - name: Run
+        run: "ls -d day_* | xargs -I '{}' cargo run --release --quiet --bin '{}'"
