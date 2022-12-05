@@ -45,7 +45,7 @@ fn get_stacks(lines: Vec<String>) -> Stacks {
     stacks_string.parse().unwrap()
 }
 
-fn get_moves(lines: &Vec<String>) -> Vec<Move> {
+fn get_moves(lines: &[String]) -> Vec<Move> {
     lines
         .iter()
         .filter_map(|l| l.parse::<Move>().ok())

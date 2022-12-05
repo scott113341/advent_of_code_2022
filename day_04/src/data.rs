@@ -34,13 +34,13 @@ impl FromStr for SectionPair {
             static ref RE: Regex = Regex::new(r"^(\d+)-(\d+),(\d+)-(\d+)$").unwrap();
         }
 
-        let caps = RE.captures(s).ok_or("Meow".to_string())?;
+        let caps = RE.captures(s).ok_or_else(|| "Meow".to_string())?;
         let parse_cap = |idx: usize| -> Result<usize, String> {
             caps.get(idx)
                 .unwrap()
                 .as_str()
                 .parse::<usize>()
-                .or(Err(format!("Failed to parse: {:?}", caps.get(idx))))
+                .map_err(|_| format!("Failed to parse: {:?}", caps.get(idx)))
         };
 
         Ok(SectionPair {
